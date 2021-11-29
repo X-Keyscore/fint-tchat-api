@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 mongoose
-	.connect('mongodb://127.0.0.1:27017/fint-tchat', { useNewUrlParser: true, useUnifiedTopology: true })
+	.connect('mongodb://78.224.134.194:27017/fint-tchat', { useNewUrlParser: true, useUnifiedTopology: true })
 	.catch(e => {
 		console.error('Connection error', e.message)
 	})
