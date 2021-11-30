@@ -1,7 +1,10 @@
-const https = require("https"),
-bodyParser = require('body-parser'),
+const bodyParser = require('body-parser'),
+https = require("https"),
+path = require('path'),
+fs = require('fs'),
 express = require('express'),
 cors = require('cors');
+
 
 const io = require("socket.io")(5000, {
 	cors: {
@@ -49,4 +52,10 @@ app.use('/api', userRouter)
 app.use('/api', channelRouter)
 app.use('/api', fileRouter)
 
-app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
+const sslServer = https.createServer({
+	key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+	cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
+}, app)
+
+sslServer.listen(3443, () => console.log('Secure server on port 3443'))
+//app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
